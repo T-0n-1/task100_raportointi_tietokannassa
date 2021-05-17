@@ -3,11 +3,11 @@
 class Asiakas:
 
     # Asiakkaalla on seuraavat tiedot tietokantataulussa nimeltä asiakas:
-    # asnro - asiakasnumero
-    # snimi - sukunimi
-    # enimi - etunimi
-    # email - sähköpostiosoite
-    # puh   - puhelinnumero
+    # asnro - asiakasnumero, text, pk
+    # snimi - sukunimi, text, nn
+    # enimi - etunimi, text
+    # email - sähköpostiosoite, text
+    # puh   - puhelinnumero, text
 
     def __init__(self, connection):
         self.conn = connection
@@ -36,9 +36,7 @@ class Asiakas:
             print("Riviä ei pystytty lukemaan asiakas-taulusta: {}.".format(e))
       
 
-    # Haetaan kaikki asiakkaat
-    # Tämän sisällä kutsutaan TulostaAsiakas()
-    def HaeKaikkiAsiakkaat(self):
+    def HaeKaikkiAsiakkaat(self):   # Haetaan kaikki asiakkaat, tämän sisällä kutsutaan TulostaAsiakas()
         try:
             self.cur.execute("SELECT * FROM asiakas")
             rivit = self.cur.fetchall()
@@ -46,9 +44,9 @@ class Asiakas:
         except Exception as e:
             print("Rivejä ei pystytty lukemaan asiakas-taulusta: {}.".format(e)) 
 
-    # Tulostetaan 1 asiakas kerrallaan
-    # Tänne parametrina rivit, jotka select on hakenut
-    def TulostaAsiakas(self, rivit):
+
+    def TulostaAsiakas(self, rivit):   # Tänne parametrina rivit, jotka SELECT on hakenut
+
         for rivi in rivit:
             print("Asiakasnumero: ", rivi[0])
             print("Nimi: ", rivi[2], " ", rivi[1])

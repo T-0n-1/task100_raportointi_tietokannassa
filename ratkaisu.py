@@ -2,13 +2,14 @@
 import sqlite3
 from sqlite3 import Error
 
-from Asiakas import Asiakas
-from Tilaus import Tilaus
+from asiakas import Asiakas
+from tilaus import Tilaus
+from tuote import Tuote
 
 
 # Määrittele luokat
 def create_connection(db_file):
-    ## Esimerkki sivustolta: https://www.sqlitetutorial.net/sqlite-python/ 
+    ## Esimerkki sivustolta: https://www.sqlitetutorial.net/sqlite-python/
     """ create a database connection to the SQLite database
         specified by db_file
     :param db_file: database file
@@ -21,7 +22,7 @@ def create_connection(db_file):
     except Error as e:
         print(e)
     return conn
- 
+
 
 def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
     print("\n1 - tulosta kaikki asiakkaat")
@@ -32,7 +33,9 @@ def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
     print("0 - lopeta")
     jatka = input("? ")
     return jatka
- 
+
+
+# Olioiden määrittely (oliomuuttujat asi, tte ja til) Voikohan valikko-funktio olla tämän yläpuolella
 
 
 
