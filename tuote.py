@@ -15,19 +15,20 @@ class Tuote:
         self.cur = self.conn.cursor()
 
 
-    def HaeKaikkiTuotteet(self):   # Haetaan kaikki tuotteet, tämän sisällä kutsutaan TulostaTuote()
+    def HaeKaikkiTuotteet(self):
         try:
             self.cur.execute("SELECT * FROM tuote")
             rivit = self.cur.fetchall()
             self.TulostaTuote(rivit)
         except Exception as e:
-            print("Rivejä ei pystytty lukemaan tuote-taulusta: {}.".format(e))
+            print(f"Rivejä ei pystytty lukemaan tuote-taulusta: {e}.")
 
 
-    def TulostaTuote(self, rivit):   # Tänne parametrina rivit, jotka select on hakenut
-        print(f'\n{'Tuotenumero':<15}{'Nimi':<20}{'Kuvaus':<40}')
+    def TulostaTuote(self, rivit):
+        tt1, tt2, tt3 = ['Tuotenumero', 'Nimi', 'Kuvaus']
+        print(f'\n{tt1:<15}{tt2:<20}{tt3:<40}')
         for rivi in rivit:
-            print(f'{rivi[0]:<15}{rivi[1]:<20}{rivi[2]:<40}+"\n"')
+            print(f'{rivi[0]:15}{rivi[1]:20}{rivi[2]:40}')
            
 
     # Tulostetaan 1 asiakkaan kaikki tilaukset

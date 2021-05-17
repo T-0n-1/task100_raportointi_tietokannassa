@@ -38,19 +38,18 @@ class Asiakas:
 
     def HaeKaikkiAsiakkaat(self):   # Haetaan kaikki asiakkaat, tämän sisällä kutsutaan TulostaAsiakas()
         try:
-            self.cur.execute("SELECT * FROM asiakas")
+            self.cur.execute("SELECT asnro, enimi || ' ' || snimi, email, puh FROM asiakas")
             rivit = self.cur.fetchall()
             self.TulostaAsiakas(rivit)
         except Exception as e:
-            print("Rivejä ei pystytty lukemaan asiakas-taulusta: {}.".format(e)) 
+            print(f"Rivejä ei pystytty lukemaan asiakas-taulusta: {e}.")
 
 
     def TulostaAsiakas(self, rivit):   # Tänne parametrina rivit, jotka SELECT on hakenut
-
+        ta1, ta2, ta3, ta4 = ['Asiakasnumero', 'Nimi', 'Email', 'Puhelin']
+        print(f'\n{ta1:<15}{ta2:<20}{ta3:<30}{ta4}')
         for rivi in rivit:
-            print("Asiakasnumero: ", rivi[0])
-            print("Nimi: ", rivi[2], " ", rivi[1])
-            print("Yhteystiedot - email: ", rivi[3], " puhelin: ", rivi[4], "\n")
+            print(f'{rivi[0]:15}{rivi[1]:20}{rivi[2]:30}{rivi[3]}')
            
 
     # Tulostetaan 1 asiakkaan kaikki tilaukset
