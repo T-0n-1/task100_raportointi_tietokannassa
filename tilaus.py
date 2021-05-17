@@ -2,9 +2,9 @@
 
 class Tilaus:
     # Tilauksella on seuraavat tiedot tietokantataulussa nimeltä tilaus:
-    # tilausnro - tilausnumero
-    # pvm       - tilauksen päivämäärä, muodossa ppkkvvvv
-    # asnro     - tilauksen tehneen asiakkaan asiakasnumero
+    # tilausnro - tilausnumero, text, pk
+    # pvm       - tilauksen päivämäärä(muodossa ppkkvvvv), text, nn
+    # asnro     - tilauksen tehneen asiakkaan asiakasnumero, nn, f(oreign)key(viittaa asiakas -tauluun)
 
     # Parametrisoitu muodostinfunktio - constructor
     def __init__(self, connection):

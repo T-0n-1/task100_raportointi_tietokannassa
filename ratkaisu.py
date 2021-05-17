@@ -25,13 +25,15 @@ def create_connection(db_file):
 
 
 def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
-    print("\n1 - tulosta kaikki asiakkaat")
-    print("2 - hae ja tulosta asiakas sukunimen perusteella")
-    print("3 - hae ja tulosta asiakas asiakasnumeron perusteella")
-    print("4 - tulosta kaikki tilaukset")
-    print("5 - tulosta yhden asiakkaan tilaukset")
+    print('\nKauppa-tietokannan raportointisovellus')
+    print("1 - Listaa kaikki asiakkaat")
+    print('2 - Listaa kaikki tuotteet')
+    print("3 - Listaa kaikki halutun asiakkaan tilaukset")
+    print("4 - hae ja tulosta asiakas sukunimen perusteella")
+    print("5 - hae ja tulosta asiakas asiakasnumeron perusteella")
+    print("6 - tulosta kaikki tilaukset")
     print("0 - lopeta")
-    jatka = input("? ")
+    jatka = input("Anna valinta: ")
     return jatka
 
 
@@ -40,37 +42,35 @@ def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
 
 
 ### PÄÄOHJELMA ###
-
-## Laita tähän se polku, jossa kauppa.db on omalla koneellasi
-tietokanta = r"kauppa.db"
-
-# luodaan yhteys tietokantaan
-conn = create_connection(tietokanta)
- 
+tietokanta = r"kauppa.db"   # Tietokannan sijainnin määrittely
+conn = create_connection(tietokanta)   # Yhteys tietokantaan
 if conn is not None:  # Mikäli tietokantayhteys saatiin luotua:
-       
+
     jatka = valikko()
     while jatka != "0":
         if jatka == "1":
             asiakas = Asiakas(conn)
             asiakas.HaeKaikkiAsiakkaat()
         elif jatka == "2":
+            tuote = Tuote(conn)
+            tuote.HaeKaikkiTuotteet()
+        elif jatka == "3":
+            asiakas = Asiakas(conn)
+            hakuehto = input("Hakuehto: ")
+            asiakas.TulostaAsiakkaanTilaukset(hakuehto)
+        elif jatka == "4":
             asiakas = Asiakas(conn)
             nimi = input("Anna asiakkaan sukunimi: ")
             asiakas.HaeAsiakasNimella(nimi)
-        elif jatka == "3":
-            asiakas = Asiakas(conn)
-            numero = input("Anna asiakkaan asiakasnumero: ")
-            asiakas.HaeAsiakasNumerolla(numero)
-        elif jatka == "4":
-            tilaus = Tilaus(conn)
-            tilaus.HaeKaikkiTilaukset()
         elif jatka == "5":
             asiakas = Asiakas(conn)
             numero = input("Anna asiakkaan asiakasnumero: ")
-            asiakas.TulostaAsiakkaanTilaukset(numero)
+            asiakas.HaeAsiakasNumerolla(numero)
+        elif jatka == "6":
+            tilaus = Tilaus(conn)
+            tilaus.HaeKaikkiTilaukset()
         else:
-            print("Tarkista valintasi")
+            print("Virheellinen valinta")
 
         jatka = valikko()
             

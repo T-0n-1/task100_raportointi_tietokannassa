@@ -3,7 +3,6 @@
 
 # Määrittele luokat
 class Tuote:
-
     # Tuotteella on seuraavat tiedot tietokantataulussa nimeltä tuote:
     # tuotenro - tuotenumero, text, pk
     # nimi - selkokielinen nimi, text, nn
