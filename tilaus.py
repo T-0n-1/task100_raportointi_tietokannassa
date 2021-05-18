@@ -55,3 +55,28 @@ class Tilaus:
                 print(f'{rivi[3]:15}{rivi[4]:<20}')
         except Exception as e:
             print(f"Riviä ei pystytty lukemaan asiakas- tai tilaus-taulusta: {e}.")
+
+
+    def TulostaTilauksetPvm(self, _hakunro):
+        eka = True
+        try:
+            hakulause = f"""
+            SELECT 
+                tilausnro,
+                pvm,
+                asnro
+            FROM tilaus t
+            WHERE pvm >= '{_hakunro}'"""
+            self.cur.execute(hakulause)
+            rivit = self.cur.fetchall()
+            header1, header2, header3 = [
+                'Tilausnumero',
+                'Pvm',
+                'Asiakasnumero']
+            for rivi in rivit:
+                if eka:
+                    print(f'\n{header1:15}{header2:20}{header3:13}')
+                    eka = False
+                print(f'{rivi[0]:15}{rivi[1]:<20}{rivi[2]:13}')
+        except Exception as e:
+            print(f"Riviä ei pystytty lukemaan asiakas- tai tilaus-taulusta: {e}.")

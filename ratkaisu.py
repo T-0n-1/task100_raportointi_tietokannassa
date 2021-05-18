@@ -26,15 +26,15 @@ def create_connection(db_file):
     return conn
 
 
-def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
+def valikko(): 
     print('\nKauppa-tietokannan raportointisovellus')
     print("1 - Listaa kaikki asiakkaat")
     print('2 - Listaa kaikki tuotteet')
     print("3 - Listaa kaikki halutun asiakkaan tilaukset")
     print("4 - Listaa kaikki halutun tuotteen tilaukset")
-    print("5 - hae ja tulosta asiakas asiakasnumeron perusteella")
-    print("6 - tulosta kaikki tilaukset")
-    print("0 - lopeta")
+    print("5 - Listaa halutun tilauksen tilausrivit")
+    print("6 - Listaa kaikki tilaukset halutusta päivämäärästä lähtien")
+    print("0 - Lopeta")
     jatka = input("Anna valinta: ")
     return jatka
 
@@ -70,7 +70,8 @@ if conn is not None:  # Mikäli tietokantayhteys saatiin luotua:
             tilaus.TulostaTilauksenTilausrivit(hakuehto)
         elif jatka == "6":
             tilaus = Tilaus(conn)
-            tilaus.HaeKaikkiTilaukset()
+            hakuehto = input("Hakuehto: ")
+            tilaus.TulostaTilauksetPvm(hakuehto)
         else:
             print("Virheellinen valinta")
 
