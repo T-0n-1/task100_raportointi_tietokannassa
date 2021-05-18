@@ -24,23 +24,71 @@ class Tuote:
 
 
     def TulostaTuote(self, rivit):
-        tt1, tt2, tt3 = ['Tuotenumero', 'Nimi', 'Kuvaus']
-        print(f'\n{tt1:<15}{tt2:<20}{tt3:<40}')
+        header1, header2, header3 = [
+            'Tuotenumero',
+            'Nimi',
+            'Kuvaus']
+        print(f'\n{header1:<15}{header2:<20}{header3:<40}')
         for rivi in rivit:
             print(f'{rivi[0]:15}{rivi[1]:20}{rivi[2]:40}')
-           
 
-    # Tulostetaan 1 asiakkaan kaikki tilaukset
-    def TulostaAsiakkaanTilaukset(self, _hakunro):
+
+    def TulostaTuotteenTilausrivit(self, _hakunro):
         eka = True
         try:
-            hakulause = "SELECT asiakas.asnro, tilausnro, pvm FROM asiakas, tilaus where asiakas.asnro = tilaus.asnro and asiakas.asnro = '" + _hakunro + "'"
-            self.cur.execute(hakulause)  
+            if _hakunro.isdigit():
+                hakulause = f"""
+                SELECT 
+                    tu.tuotenro, 
+                    nimi, 
+                    kuvaus, 
+                    tr.tilausnro, 
+                    pvm, 
+                    enimi || ' ' || snimi AS nimi, 
+                    kpl 
+                FROM tuote tu 
+                JOIN tilausrivi tr 
+                    USING (tuotenro) 
+                JOIN tilaus ti 
+                    USING (tilausnro) 
+                JOIN asiakas a 
+                    USING (asnro) 
+                WHERE tu.tuotenro = '{_hakunro}'"""
+            else:
+                hakulause = f"""
+                SELECT 
+                    tu.tuotenro, 
+                    nimi, 
+                    kuvaus, 
+                    tr.tilausnro, 
+                    pvm, 
+                    enimi || ' ' || snimi AS nimi, 
+                    kpl 
+                FROM tuote tu 
+                JOIN tilausrivi tr 
+                    USING (tuotenro) 
+                JOIN tilaus ti 
+                    USING (tilausnro) 
+                JOIN asiakas a 
+                    USING (asnro)  
+                WHERE tu.tuotenro = 
+                    (SELECT tuotenro FROM tuote WHERE nimi = '{_hakunro}')"""
+            self.cur.execute(hakulause)
             rivit = self.cur.fetchall()
+            header1, header2, header3, header4, header5, header6, header7 = [
+                'Tuotenumero',
+                'Nimi',
+                'Kuvaus',
+                'Tilausnro',
+                'Pvm',
+                'Asiakas',
+                'Kpl']
             for rivi in rivit:
-                if (eka):
-                    print("Asiakasnumero:   ", rivi[0])
+                if eka:
+                    print(f'\n{header1:15}{header2:20}{header3:32}')
+                    print(f'{rivi[0]:15}{rivi[1]:20}{rivi[2]:32}')
+                    print(f'{header4:15}{header5:20}{header6:20}{header7:12}')
                     eka = False
-                print("   tilausnumero: ", rivi[1], " tilauspvm", rivi[2])
+                print(f'{rivi[3]:15}{rivi[4]:20}{rivi[5]:20}{rivi[6]:<12}')
         except Exception as e:
-            print("Riviä ei pystytty lukemaan asiakas- tai tilaus-taulusta: {}.".format(e))
+            print(f"Riviä ei pystytty lukemaan asiakas- tai tilaus-taulusta: {e}.")

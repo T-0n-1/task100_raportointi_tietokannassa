@@ -7,6 +7,8 @@ from tilaus import Tilaus
 from tuote import Tuote
 
 
+import asiakas, tilaus, tuote
+
 # Määrittele luokat
 def create_connection(db_file):
     ## Esimerkki sivustolta: https://www.sqlitetutorial.net/sqlite-python/
@@ -29,7 +31,7 @@ def valikko():   # Funktio, joka tulostaa valikon, ja palauttaa tehdyn valinnan
     print("1 - Listaa kaikki asiakkaat")
     print('2 - Listaa kaikki tuotteet')
     print("3 - Listaa kaikki halutun asiakkaan tilaukset")
-    print("4 - hae ja tulosta asiakas sukunimen perusteella")
+    print("4 - Listaa kaikki halutun tuotteen tilaukset")
     print("5 - hae ja tulosta asiakas asiakasnumeron perusteella")
     print("6 - tulosta kaikki tilaukset")
     print("0 - lopeta")
@@ -59,9 +61,9 @@ if conn is not None:  # Mikäli tietokantayhteys saatiin luotua:
             hakuehto = input("Hakuehto: ")
             asiakas.TulostaAsiakkaanTilaukset(hakuehto)
         elif jatka == "4":
-            asiakas = Asiakas(conn)
-            nimi = input("Anna asiakkaan sukunimi: ")
-            asiakas.HaeAsiakasNimella(nimi)
+            tuote = Tuote(conn)
+            hakuehto = input("Hakuehto: ")
+            tuote.TulostaTuotteenTilausrivit(hakuehto)
         elif jatka == "5":
             asiakas = Asiakas(conn)
             numero = input("Anna asiakkaan asiakasnumero: ")
