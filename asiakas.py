@@ -1,5 +1,3 @@
-## Asiakas-luokka
-
 class Asiakas:
     # Asiakkaalla on seuraavat tiedot tietokantataulussa nimeltä asiakas:
     # asnro - asiakasnumero, text, pk
@@ -18,8 +16,8 @@ class Asiakas:
             self.cur.execute("SELECT asnro, enimi || ' ' || snimi, email, puh FROM asiakas")
             rivit = self.cur.fetchall()
             self.TulostaAsiakas(rivit)
-        except Exception as e:
-            print(f"Rivejä ei pystytty lukemaan asiakas-taulusta: {e}.")
+        except:
+            pass
 
 
     def TulostaAsiakas(self, rivit):

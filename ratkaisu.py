@@ -65,9 +65,9 @@ if conn is not None:  # Mikäli tietokantayhteys saatiin luotua:
             hakuehto = input("Hakuehto: ")
             tuote.TulostaTuotteenTilausrivit(hakuehto)
         elif jatka == "5":
-            asiakas = Asiakas(conn)
-            numero = input("Anna asiakkaan asiakasnumero: ")
-            asiakas.HaeAsiakasNumerolla(numero)
+            tilaus = Tilaus(conn)
+            hakuehto = input("Hakuehto: ")
+            tilaus.TulostaTilauksenTilausrivit(hakuehto)
         elif jatka == "6":
             tilaus = Tilaus(conn)
             tilaus.HaeKaikkiTilaukset()
